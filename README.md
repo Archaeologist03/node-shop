@@ -1,10 +1,10 @@
 ## Node-shop
 
 #### Install dependencies
-`bash
+```bash
 npm install
-`
+```
 #### Start application(nodemon)
-`bash
+```bash
 npm start
-`
+```
