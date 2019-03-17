@@ -1,9 +1,16 @@
-const Sequelize = require('sequelize');
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 
-const sequelize = new Sequelize('node-shop', 'root', 'bandera123', {
-  dialect: 'mysql',
-  host: 'localhost',
-  operatorsAliases: false,
-});
+const mongoConnect = callback => {
+  MongoClient.connect(
+    'mongodb+srv://ilija:bandera123@cluster0-lhdxp.mongodb.net/test?retryWrites=true',
+    { useNewUrlParser: true },
+  )
+    .then(client => {
+      console.log('connected');
+      callback(client);
+    })
+    .catch(err => console.log(err));
+};
 
-module.exports = sequelize;
+module.exports = mongoConnect;
