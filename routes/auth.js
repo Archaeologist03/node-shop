@@ -10,7 +10,20 @@ router.get('/login', authController.getLogin);
 
 router.get('/signup', authController.getSignup);
 
-router.post('/login', authController.postLogin);
+router.post(
+  '/login',
+  [
+    body('email')
+      .isEmail()
+      .withMessage('Please enter a valid email address.')
+      .normalizeEmail(),
+    body('password', 'Password has to be valid.')
+      .isLength({ min: 5 })
+      .isAlphanumeric()
+      .trim(),
+  ],
+  authController.postLogin,
+);
 
 router.post(
   '/signup',
@@ -31,7 +44,8 @@ router.post(
             );
           }
         });
-      }),
+      })
+      .normalizeEmail(),
     //alternative (body instead of check), check specific part of req
     //checks for password in the body of request, if it happens to password value be in headers it doesn't care about it.
     body(
@@ -39,13 +53,16 @@ router.post(
       'Please enter a password with only numbers and text, at least 5 characters long',
     )
       .isLength({ min: 5 })
-      .isAlphanumeric(),
-    body('confirmPassword').custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error('Passwords have to match!');
-      }
-      return true;
-    }),
+      .isAlphanumeric()
+      .trim(),
+    body('confirmPassword')
+      .trim()
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error('Passwords have to match!');
+        }
+        return true;
+      }),
   ],
   authController.postSignup,
 );
