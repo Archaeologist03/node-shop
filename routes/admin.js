@@ -25,10 +25,10 @@ router.post(
     body('price').isFloat(),
     body('description')
       .isLength({ min: 5, max: 400 })
-      .trim()
+      .trim(),
   ],
   isAuth,
-  adminController.postAddProduct
+  adminController.postAddProduct,
 );
 
 router.get('/edit-product/:productId', isAuth, adminController.getEditProduct);
@@ -40,14 +40,13 @@ router.post(
       .isString()
       .isLength({ min: 3 })
       .trim(),
-    body('imageUrl').isURL(),
     body('price').isFloat(),
     body('description')
       .isLength({ min: 5, max: 400 })
-      .trim()
+      .trim(),
   ],
   isAuth,
-  adminController.postEditProduct
+  adminController.postEditProduct,
 );
 
 router.post('/delete-product', isAuth, adminController.postDeleteProduct);
