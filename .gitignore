@@ -2,3 +2,7 @@ node_modules
 
 keys/mongoURI.js
 keys/sendgrid.js
+keys/stripe.js
+
+images/*
+data/invoices/*
